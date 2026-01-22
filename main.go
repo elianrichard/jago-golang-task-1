@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"strings"
 
-	"example.com/v2/model"
+	"categories-api/model"
 )
 
 func returnJsonResponse(w http.ResponseWriter, data any) {
@@ -101,7 +101,7 @@ func main() {
 				return
 			}
 			for _, category := range DefaultCategories {
-				if newCategory.ID < category.ID {
+				if newCategory.ID <= category.ID {
 					newCategory.ID = category.ID + 1
 				}
 			}
@@ -119,8 +119,10 @@ func main() {
 		})
 	})
 
+	fmt.Println("Server running in http://localhost:8080")
 	err := http.ListenAndServe(":8080", nil)
 	if err != nil {
 		fmt.Println("Internal Server Error")
+		return
 	}
 }

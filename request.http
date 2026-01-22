@@ -39,11 +39,11 @@ Accept: application/json
 ### =========================
 ### Edit category by id
 ### =========================
-PUT {{baseUrl}}/api/v1/category/1
+PUT {{baseUrl}}/api/v1/category/2
 Accept: application/json
 Content-Type: application/json
 
 {
-    "name": "Snacks",
-    "description": "This is snacks"
+    "name": "Bread",
+    "description": "This is bread"
 }

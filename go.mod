@@ -1,3 +1,3 @@
-module example.com/v2
+module categories-api
 
 go 1.25.6
