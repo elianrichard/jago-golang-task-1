@@ -26,7 +26,7 @@ func getCategoryRequestPayload(w http.ResponseWriter, r *http.Request) (model.Ca
 }
 
 func getCategoryById(w http.ResponseWriter, r *http.Request) (model.Category, int) {
-	idStr := strings.TrimPrefix(r.URL.Path, "/api/v1/category/")
+	idStr := strings.TrimPrefix(r.URL.Path, "/categories/")
 	categoryId, err := strconv.Atoi(idStr)
 	if err != nil {
 		http.Error(w, "Invalid Category ID", http.StatusBadRequest)
@@ -56,7 +56,7 @@ var DefaultCategories = []model.Category{
 }
 
 func main() {
-	http.HandleFunc("/api/v1/category/", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/categories/", func(w http.ResponseWriter, r *http.Request) {
 		switch r.Method {
 		case "GET":
 			categoryItem, i := getCategoryById(w, r)
@@ -91,7 +91,7 @@ func main() {
 		}
 	})
 
-	http.HandleFunc("/api/v1/categories", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/categories", func(w http.ResponseWriter, r *http.Request) {
 		switch r.Method {
 		case "GET":
 			returnJsonResponse(w, DefaultCategories)

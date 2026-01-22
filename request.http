@@ -9,13 +9,13 @@ Accept: application/json
 ### =========================
 ### Get categories
 ### =========================
-GET {{baseUrl}}/api/v1/categories
+GET {{baseUrl}}/categories
 Accept: application/json
 
 ### =========================
 ### Post new categories
 ### =========================
-POST {{baseUrl}}/api/v1/categories
+POST {{baseUrl}}/categories
 Accept: application/json
 Content-Type: application/json
 
@@ -27,19 +27,19 @@ Content-Type: application/json
 ### =========================
 ### Get category detail by ID
 ### =========================
-GET {{baseUrl}}/api/v1/category/1
+GET {{baseUrl}}/categories/1
 Accept: application/json
 
 ### =========================
 ### Delete category by ID
 ### =========================
-DELETE {{baseUrl}}/api/v1/category/1
+DELETE {{baseUrl}}/categories/1
 Accept: application/json
 
 ### =========================
 ### Edit category by id
 ### =========================
-PUT {{baseUrl}}/api/v1/category/2
+PUT {{baseUrl}}/categories/2
 Accept: application/json
 Content-Type: application/json
 
