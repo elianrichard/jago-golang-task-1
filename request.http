@@ -1,0 +1,49 @@
+@baseUrl = http://localhost:8080
+
+### =========================
+### Check health
+### =========================
+GET {{baseUrl}}/health
+Accept: application/json
+
+### =========================
+### Get categories
+### =========================
+GET {{baseUrl}}/api/v1/categories
+Accept: application/json
+
+### =========================
+### Post new categories
+### =========================
+POST {{baseUrl}}/api/v1/categories
+Accept: application/json
+Content-Type: application/json
+
+{
+    "name": "Snacks",
+    "description": "This is snacks"
+}
+
+### =========================
+### Get category detail by ID
+### =========================
+GET {{baseUrl}}/api/v1/category/1
+Accept: application/json
+
+### =========================
+### Delete category by ID
+### =========================
+DELETE {{baseUrl}}/api/v1/category/1
+Accept: application/json
+
+### =========================
+### Edit category by id
+### =========================
+PUT {{baseUrl}}/api/v1/category/1
+Accept: application/json
+Content-Type: application/json
+
+{
+    "name": "Snacks",
+    "description": "This is snacks"
+}
