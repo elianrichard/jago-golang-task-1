@@ -28,24 +28,25 @@ Content-Type: application/json
 ### =========================
 ### Get product detail by ID
 ### =========================
-GET {{baseUrl}}/products/eb15b591-5f5c-498d-a160-df857778e6e0
+GET {{baseUrl}}/products/70be36fd-b5de-4bc1-94fd-a2da4fbc8e13
 Accept: application/json
 
 ### =========================
 ### Delete product by ID
 ### =========================
-DELETE {{baseUrl}}/products/eb15b591-5f5c-498d-a160-df857778e6e0
+DELETE {{baseUrl}}/products/70be36fd-b5de-4bc1-94fd-a2da4fbc8e13
 Accept: application/json
 
 ### =========================
 ### Edit product by id
 ### =========================
-PUT {{baseUrl}}/products/eb15b591-5f5c-498d-a160-df857778e6e0
+PUT {{baseUrl}}/products/70be36fd-b5de-4bc1-94fd-a2da4fbc8e13
 Accept: application/json
 Content-Type: application/json
 
 {
     "name": "FitBar Edit",
     "stock": 50,
-    "price": 1000
+    "price": 1000,
+    "category_id": "41b2d9d0-bd61-424c-92a4-20698577f036"
 }

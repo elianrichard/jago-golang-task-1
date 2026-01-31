@@ -39,7 +39,7 @@ Accept: application/json
 ### =========================
 ### Edit category by id
 ### =========================
-PUT {{baseUrl}}/categories/90b90fb7-de05-4e65-8f63-e4c235cb8014
+PUT {{baseUrl}}/categories/41b2d9d0-bd61-424c-92a4-20698577f036
 Accept: application/json
 Content-Type: application/json
 
