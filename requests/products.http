@@ -1,4 +1,4 @@
-@baseUrl = http://localhost:8080/api
+@baseUrl = http://localhost:8080
 
 ### =========================
 ### Check health
@@ -9,13 +9,13 @@ Accept: application/json
 ### =========================
 ### Get products
 ### =========================
-GET {{baseUrl}}/products
+GET {{baseUrl}}/api/products
 Accept: application/json
 
 ### =========================
 ### Post new product
 ### =========================
-POST {{baseUrl}}/products
+POST {{baseUrl}}/api/products
 Accept: application/json
 Content-Type: application/json
 
@@ -28,19 +28,19 @@ Content-Type: application/json
 ### =========================
 ### Get product detail by ID
 ### =========================
-GET {{baseUrl}}/products/70be36fd-b5de-4bc1-94fd-a2da4fbc8e13
+GET {{baseUrl}}/api/products/70be36fd-b5de-4bc1-94fd-a2da4fbc8e13
 Accept: application/json
 
 ### =========================
 ### Delete product by ID
 ### =========================
-DELETE {{baseUrl}}/products/70be36fd-b5de-4bc1-94fd-a2da4fbc8e13
+DELETE {{baseUrl}}/api/products/70be36fd-b5de-4bc1-94fd-a2da4fbc8e13
 Accept: application/json
 
 ### =========================
 ### Edit product by id
 ### =========================
-PUT {{baseUrl}}/products/70be36fd-b5de-4bc1-94fd-a2da4fbc8e13
+PUT {{baseUrl}}/api/products/70be36fd-b5de-4bc1-94fd-a2da4fbc8e13
 Accept: application/json
 Content-Type: application/json
 
