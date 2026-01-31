@@ -3,11 +3,19 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
+	"os"
 	"strconv"
 	"strings"
 
-	"categories-api/model"
+	"kasir-api/database"
+	"kasir-api/handlers"
+	"kasir-api/models"
+	"kasir-api/repositories"
+	"kasir-api/services"
+
+	"github.com/spf13/viper"
 )
 
 func returnJsonResponse(w http.ResponseWriter, data any) {
@@ -15,22 +23,22 @@ func returnJsonResponse(w http.ResponseWriter, data any) {
 	json.NewEncoder(w).Encode(data)
 }
 
-func getCategoryRequestPayload(w http.ResponseWriter, r *http.Request) (model.Category, bool) {
-	var categoryPayload model.Category
+func getCategoryRequestPayload(w http.ResponseWriter, r *http.Request) (models.Category, bool) {
+	var categoryPayload models.Category
 	err := json.NewDecoder(r.Body).Decode(&categoryPayload)
 	if err != nil {
 		http.Error(w, "Invalid Request Body", http.StatusBadRequest)
-		return model.Category{}, false
+		return models.Category{}, false
 	}
 	return categoryPayload, true
 }
 
-func getCategoryById(w http.ResponseWriter, r *http.Request) (model.Category, int) {
+func getCategoryById(w http.ResponseWriter, r *http.Request) (models.Category, int) {
 	idStr := strings.TrimPrefix(r.URL.Path, "/categories/")
 	categoryId, err := strconv.Atoi(idStr)
 	if err != nil {
 		http.Error(w, "Invalid Category ID", http.StatusBadRequest)
-		return model.Category{}, -1
+		return models.Category{}, -1
 	}
 
 	for i, category := range DefaultCategories {
@@ -39,10 +47,10 @@ func getCategoryById(w http.ResponseWriter, r *http.Request) (model.Category, in
 		}
 	}
 	http.Error(w, "Category Not Found", http.StatusBadRequest)
-	return model.Category{}, -1
+	return models.Category{}, -1
 }
 
-var DefaultCategories = []model.Category{
+var DefaultCategories = []models.Category{
 	{
 		ID:          1,
 		Name:        "Main Course",
@@ -56,6 +64,33 @@ var DefaultCategories = []model.Category{
 }
 
 func main() {
+	viper.AutomaticEnv()
+	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
+
+	if _, err := os.Stat(".env"); err == nil {
+		viper.SetConfigFile(".env")
+		_ = viper.ReadInConfig()
+	}
+
+	config := models.Config{
+		Port:   viper.GetString("PORT"),
+		DBConn: viper.GetString("DATABASE_URL"),
+	}
+
+	log.Println("Connecting to database...")
+	db, err := database.InitDB(config.DBConn)
+	if err != nil {
+		log.Fatal("Failed to initialize database:", err)
+	}
+	defer db.Close()
+
+	productRepo := repositories.NewProductRepository(db)
+	productService := services.NewProductService(productRepo)
+	productHandler := handlers.NewProductHandler(productService)
+
+	http.HandleFunc("/api/products", productHandler.HandleProducts)
+	http.HandleFunc("/api/products/", productHandler.HandleProductById)
+
 	http.HandleFunc("/categories/", func(w http.ResponseWriter, r *http.Request) {
 		switch r.Method {
 		case "GET":
@@ -119,8 +154,10 @@ func main() {
 		})
 	})
 
-	fmt.Println("Server running in http://localhost:8080")
-	err := http.ListenAndServe(":8080", nil)
+	addr := ":" + config.Port
+	fmt.Println("Server running in http", addr)
+
+	err = http.ListenAndServe(addr, nil)
 	if err != nil {
 		fmt.Println("Internal Server Error")
 		return
