@@ -77,7 +77,7 @@ func (repo *ProductRepository) DeleteById(id string) error {
 	return err
 }
 
-func (repo *ProductRepository) UpdateProduct(product *models.Product) error {
+func (repo *ProductRepository) Update(product *models.Product) error {
 	query := "UPDATE products SET name = $1, price = $2, stock = $3 WHERE id = $4"
 	result, err := repo.db.Exec(query, product.Name, product.Price, product.Stock, product.ID)
 	if err != nil {

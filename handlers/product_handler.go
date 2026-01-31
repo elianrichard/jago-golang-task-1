@@ -54,7 +54,7 @@ func (h *ProductHandler) Create(w http.ResponseWriter, r *http.Request) {
 	utils.ReturnJsonResponse(w, product)
 }
 
-// Endpoint /api/product/
+// Endpoint /api/products/
 func (h *ProductHandler) HandleProductById(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case http.MethodGet:
@@ -62,7 +62,7 @@ func (h *ProductHandler) HandleProductById(w http.ResponseWriter, r *http.Reques
 	case http.MethodDelete:
 		h.DeleteById(w, r)
 	case http.MethodPut:
-		h.UpdateProduct(w, r)
+		h.Update(w, r)
 	default:
 		http.Error(w, "Method Not Allowed", http.StatusBadRequest)
 	}
@@ -91,7 +91,7 @@ func (h *ProductHandler) DeleteById(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
-func (h *ProductHandler) UpdateProduct(w http.ResponseWriter, r *http.Request) {
+func (h *ProductHandler) Update(w http.ResponseWriter, r *http.Request) {
 	var product models.Product
 	err := json.NewDecoder(r.Body).Decode(&product)
 	if err != nil {
@@ -100,7 +100,7 @@ func (h *ProductHandler) UpdateProduct(w http.ResponseWriter, r *http.Request) {
 	}
 	id := utils.GetIdFromRequest(w, r, "/api/products/")
 	product.ID = id
-	err = h.service.UpdateProduct(&product)
+	err = h.service.Update(&product)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusNotFound)
 		return

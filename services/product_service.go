@@ -29,6 +29,6 @@ func (s *ProductService) DeleteById(id string) error {
 	return s.repo.DeleteById(id)
 }
 
-func (s *ProductService) UpdateProduct(product *models.Product) error {
-	return s.repo.UpdateProduct(product)
+func (s *ProductService) Update(product *models.Product) error {
+	return s.repo.Update(product)
 }
